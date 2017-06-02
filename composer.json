@@ -1,0 +1,27 @@
+{
+    "name": "chrisullyott/php-log",
+    "type": "library",
+    "description": "A dead-simple logger, storing data in JSON.",
+    "homepage": "https://github.com/chrisullyott/php-log",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Ullyott",
+            "email": "contact@chrisullyott.com",
+            "homepage": "http://www.chrisullyott.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/chrisullyott/php-log/issues",
+        "source": "https://github.com/chrisullyott/php-log"
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "chrisullyott/php-file": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}

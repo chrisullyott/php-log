@@ -35,12 +35,6 @@ class Log
         return is_array($array) ? $array : array();
     }
 
-    public function getCount()
-    {
-        return count($this->getAll());
-    }
-
-    public function add($value)
     {
         $array = $this->getAll();
 

@@ -27,14 +27,6 @@ $log->merge(array(
 ));
 ```
 
-**add** if you don't even need key-value pairs.
-
-```
-$log->add('blue');
-$log->add('white');
-$log->add('tan');
-```
-
 ### Retrieving items
 
 **get** an item by key:
@@ -55,10 +47,4 @@ $log->getAll();
 
 ```
 $log->delete('key');
-```
-
-**deleteValue** to delete all entries with a given value:
-
-```
-$log->deleteValue('value');
 ```

@@ -78,19 +78,6 @@ class Log
         return $this;
     }
 
-    public function deleteValue($value)
-    {
-        $array = $this->getAll();
-
-        while (($key = array_search($value, $array)) !== false) {
-            unset($array[$key]);
-        }
-
-        $this->save($array);
-
-        return $this;
-    }
-
     private function save(array $array)
     {
         return File::write($this->getFile(), json_encode($array));

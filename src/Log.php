@@ -78,6 +78,19 @@ class Log
     }
 
     /**
+     * Define the entire dataset.
+     *
+     * @param  array $array The array of data to store
+     * @return self
+     */
+    public function setAll(array $array)
+    {
+        $this->save($array);
+
+        return $this;
+    }
+
+    /**
      * Merge an array into the existing dataset.
      *
      * @param  array $array The array of data to store

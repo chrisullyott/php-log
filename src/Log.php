@@ -71,20 +71,7 @@ class Log
     public function set($key, $value = null)
     {
         $array = $this->getAll();
-
-        $array[] = $value;
-
-        $this->save($array);
-
-        return $this;
-    }
-
-    public function set($key, $value)
-    {
-        $array = $this->getAll();
-
         $array[$key] = $value;
-
         $this->save($array);
 
         return $this;
@@ -99,7 +86,6 @@ class Log
     public function merge(array $array)
     {
        $array = array_merge($this->getAll(), $array);
-
        $this->save($array);
 
        return $this;
@@ -134,5 +120,4 @@ class Log
     {
         return File::write($this->getFile(), json_encode($array));
     }
-
 }

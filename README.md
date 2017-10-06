@@ -2,6 +2,16 @@
 
 A dead-simple logger, storing data in JSON.
 
+### Installation
+
+With Composer:
+
+```
+"require": {
+    "chrisullyott/php-log": "dev-master"
+}
+```
+
 ### Instantiate
 
 The only argument is the path for the file.

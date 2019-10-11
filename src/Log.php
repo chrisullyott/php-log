@@ -1,51 +1,66 @@
 <?php
 
 /**
- * Persists data in a JSON file.
- *
- * @author Chris Ullyott <chris@monkdevelopment.com>
+ * Persist data in a JSON file.
  */
+
+namespace ChrisUllyott;
+
 class Log
 {
     /**
-     * A path for the JSON file.
+     * A path for the local file.
      *
      * @var string
      */
     private $file;
 
     /**
+     * Whether to minify the data.
+     *
+     * @var boolean
+     */
+    private $minify;
+
+    /**
+     * The contents fetched from storage.
+     *
+     * @var string
+     */
+    private $contents;
+
+    /**
+     * The data in memory.
+     *
+     * @var array
+     */
+    private $data = [];
+
+    /**
      * Constructor.
      *
      * @param string $file A path for the JSON file
      */
-    public function __construct($file)
+    public function __construct($file, $minify = false)
     {
         $this->file = $file;
-        File::createDir(dirname($this->file));
-    }
+        $this->minify = $minify ? 0 : JSON_PRETTY_PRINT;
 
-    /**
-     * Get the path for the JSON file.
-     *
-     * @return string
-     */
-    public function getFile()
-    {
-        return $this->file;
+        if (file_exists($this->file)) {
+            $this->contents = file_get_contents($this->file);
+            $this->data = json_decode($this->contents, true);
+        }
     }
 
     /**
      * Get a stored value by key.
      *
-     * @param  string|integer $key The item key
+     * @param  mixed $key The item key
      * @return mixed
      */
     public function get($key)
     {
-        $array = $this->getAll();
-
-        return isset($array[$key]) ? $array[$key] : null;
+        return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
     /**
@@ -55,82 +70,85 @@ class Log
      */
     public function getAll()
     {
-        $json = File::read($this->getFile());
-        $array = json_decode($json, true);
-
-        return is_array($array) ? $array : array();
+        return $this->data;
     }
 
     /**
      * Persist a value by key.
      *
-     * @param string|integer $key   The key to use
-     * @param string|integer $value The value to store
+     * @param mixed $key   The key to use
+     * @param mixed $value The value to store
      * @return self
      */
-    public function set($key, $value = null)
+    public function set($key, $value)
     {
-        $array = $this->getAll();
-        $array[$key] = $value;
-        $this->save($array);
+        $this->data[$key] = $value;
 
         return $this;
     }
 
     /**
-     * Define the entire dataset.
+     * Whether a given key exists.
      *
-     * @param  array $array The array of data to store
-     * @return self
+     * @param  mixed $key The key to check
+     * @return boolean
      */
-    public function setAll(array $array)
+    public function exists($key)
     {
-        $this->save($array);
-
-        return $this;
+        return array_key_exists($key, $this->data);
     }
 
     /**
-     * Merge an array into the existing dataset.
+     * Whether a given key exists and is not empty.
      *
-     * @param  array $array The array of data to store
-     * @return self
+     * @param  mixed $key The key to check
+     * @return boolean
      */
-    public function merge(array $array)
+    public function isset($key)
     {
-       $array = array_merge($this->getAll(), $array);
-       $this->save($array);
-
-       return $this;
+        return isset($key, $this->data);
     }
 
     /**
      * Delete an item by key.
      *
-     * @param string|integer $key The key to use
+     * @param mixed $key The key to use
      * @return self
      */
     public function delete($key)
     {
-        $array = $this->getAll();
-
-        if (isset($array[$key])) {
-            unset($array[$key]);
+        if (isset($this->data[$key])) {
+            unset($this->data[$key]);
         }
-
-        $this->save($array);
 
         return $this;
     }
 
     /**
-     * Persist an array of data.
+     * Delete all data.
      *
-     * @param  array $array The array of data to store
-     * @return bool         Whether the file was written
+     * @return self
      */
-    private function save(array $array)
+    public function reset()
     {
-        return File::write($this->getFile(), json_encode($array));
+        $this->data = [];
+
+        if (file_exists($this->file)) {
+            unlink($this->file);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Save the data to disk.
+     */
+    public function __destruct()
+    {
+        $new_contents = json_encode($this->data, $this->minify);
+
+        if ($this->data && $new_contents !== $this->contents) {
+            file_put_contents($this->file, $new_contents);
+        }
     }
 }

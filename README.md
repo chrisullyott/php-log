@@ -2,39 +2,28 @@
 
 A dead-simple logger, storing data in JSON.
 
-### Installation
+### Install
 
 With Composer:
 
 ```
-"require": {
-    "chrisullyott/php-log": "dev-master"
-}
+$ composer require chrisullyott/php-log
 ```
 
 ### Instantiate
 
-The only argument is the path for the file.
+Set a path for the file.
 
 ```
-$log = new Log('logs/data.json');
+$log = new Log('data.json');
 ```
 
 ### Adding items
 
-**set** to store data by key.
+**set** to store data by key:
 
 ```
 $log->set('color', 'teal');
-```
-
-**merge** to store an array of items.
-
-```
-$log->merge(array(
-    'color' => 'teal',
-    'scent' => 'ocean breeze'
-));
 ```
 
 ### Retrieving items
@@ -45,16 +34,16 @@ $log->merge(array(
 $log->get('color');
 ```
 
-**getAll** as an array:
-
-```
-$log->getAll();
-```
-
 ### Deleting items
 
 **delete** an item by key:
 
 ```
 $log->delete('key');
+```
+
+**reset** to delete the entire database:
+
+```
+$log->reset();
 ```

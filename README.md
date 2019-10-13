@@ -6,7 +6,7 @@ A dead-simple logger, storing data in JSON.
 
 With Composer:
 
-```
+```php
 $ composer require chrisullyott/php-log
 ```
 
@@ -14,7 +14,7 @@ $ composer require chrisullyott/php-log
 
 Set a path for the file.
 
-```
+```php
 $log = new Log('data.json');
 ```
 
@@ -22,7 +22,7 @@ $log = new Log('data.json');
 
 **set** to store data by key:
 
-```
+```php
 $log->set('color', 'teal');
 ```
 
@@ -30,7 +30,7 @@ $log->set('color', 'teal');
 
 **get** an item by key:
 
-```
+```php
 $log->get('color');
 ```
 
@@ -38,12 +38,12 @@ $log->get('color');
 
 **delete** an item by key:
 
-```
+```php
 $log->delete('key');
 ```
 
 **reset** to delete the entire database:
 
-```
+```php
 $log->reset();
 ```

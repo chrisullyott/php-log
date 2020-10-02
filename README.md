@@ -15,7 +15,7 @@ $ composer require chrisullyott/php-log
 Set a path for the file.
 
 ```php
-$log = new Log('data.json');
+$log = new ChrisUllyott\Log('data.json');
 ```
 
 ### Adding items

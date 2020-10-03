@@ -44,7 +44,7 @@ class Log
     public function __construct($file, $minify = false)
     {
         $this->file = $file;
-        $this->minify = $minify ? 0 : JSON_PRETTY_PRINT;
+        $this->minify = $minify ? JSON_PRETTY_PRINT : 0;
 
         if (file_exists($this->file)) {
             $this->contents = file_get_contents($this->file);
